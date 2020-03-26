@@ -28,19 +28,21 @@ python setup.py install
 ```python
 import ludopy
 import numpy as np
-from tqdm import tqdm
 
 g = ludopy.Game()
 
-moves = 400
-for _ in tqdm(range(moves)):
+while True:
     (dice, move_pieces, player_pieces, enemy_pieces, player_is_a_winner, there_is_a_winner), player_i = g.get_observation()
 
     if len(move_pieces):
         piece_to_move = move_pieces[np.random.randint(0, len(move_pieces))]
     else:
         piece_to_move = -1
-    g.answer_observation(piece_to_move)
+
+    _, _, _, _, _, there_is_a_winner = g.answer_observation(piece_to_move)
+    if there_is_a_winner:
+        print(f"Player number {there_is_a_winner} is the winner")
+        break
 
 print("Saving history to numpy file")
 g.save_hist(f"game_history.npy")
