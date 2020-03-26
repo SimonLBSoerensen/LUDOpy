@@ -4,6 +4,25 @@ This is a implementation of the LUDO game in python for use in AI or whatever yo
 
 For normal use of ludopy only ludopy.Game should be needed.
 
+# Installation
+- Recommended: Install ludopy from PyPI: 
+```sh
+pip install ludopy
+```
+- Alternatively: install ludopy from the GitHub source:
+
+First, clone ludopy using `git`:
+
+```sh
+git clone https://github.com/SimonLBSoerensen/LUDOpy
+```
+
+Then, `cd` to the folder and run the install command:
+```sh
+cd LUDOpy
+python setup.py install
+```
+
 ## The rules the game follows:
 
 ### The dice
@@ -40,9 +59,13 @@ The rules are taken from the danish site: http://spilregler.dk/ludo/
 
 ## The Board
 
-![The image show a example of the board](https://github.com/SimonLBSoerensen/LUDOpy/blob/master/board_example.png?raw=true "Board example")
-![The image show a example of the board](https://github.com/SimonLBSoerensen/LUDOpy/blob/master/board_example_2.png?raw=true "Board example")
+### Example 1
 
+![The image show a example of the board](https://github.com/SimonLBSoerensen/LUDOpy/blob/master/board_example.png?raw=true "Board example")
+
+### Example 2
+
+![The image show a example of the board](https://github.com/SimonLBSoerensen/LUDOpy/blob/master/board_example_2.png?raw=true "Board example")
 
 ## Random "walk" example:
 ```python
@@ -66,25 +89,6 @@ print("Saving history to numpy file")
 g.save_hist(f"game_history.npy")
 print("Saving game video")
 g.save_hist_video(f"game_video.mp4")
-```
-
-# Installation
-- Recommended: Install ludopy from PyPI: 
-```sh
-pip install ludopy
-```
-- Alternatively: install ludopy from the GitHub source:
-
-First, clone ludopy using `git`:
-
-```sh
-git clone https://github.com/SimonLBSoerensen/LUDOpy
-```
-
-Then, `cd` to the folder and run the install command:
-```sh
-cd LUDOpy
-python setup.py install
 ```
 
 # Attribution 
