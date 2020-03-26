@@ -40,7 +40,8 @@ The rules are taken from the danish site: http://spilregler.dk/ludo/
 
 ## The Board
 
-![alt text](https://github.com/adam-p/markdown-here/raw/master/src/common/images/icon48.png "Logo Title Text 1")
+![The image show a example of the board](https://github.com/SimonLBSoerensen/LUDOpy/blob/master/board_example.png?raw=true "Board example")
+![The image show a example of the board](https://github.com/SimonLBSoerensen/LUDOpy/blob/master/board_example_2.png?raw=true "Board example")
 
 
 ## Random "walk" example:
