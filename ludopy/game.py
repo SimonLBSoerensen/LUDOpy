@@ -1,5 +1,5 @@
-import player
-import visualizer
+from .player import Player
+from .visualizer import make_img_of_board, save_hist_video
 import numpy as np
 from tqdm import tqdm
 
@@ -30,7 +30,7 @@ class Game:
         self.hist.append([pieces, self.current_dice, self.current_player+1, self.round])
 
     def reset(self):
-        self.players = [player.Player(), player.Player(), player.Player(), player.Player()]
+        self.players = [Player(), Player(), Player(), Player()]
         self.hist = []
 
     def __gen_observation(self, player_idx):
@@ -143,7 +143,7 @@ class Game:
         return self.hist
 
     def render_environment(self):
-        board_img = visualizer.make_img_of_board(*self.hist[-1])
+        board_img = make_img_of_board(*self.hist[-1])
         return board_img
 
     def save_hist(self, file_name):
@@ -152,7 +152,7 @@ class Game:
         np.save(file_name, self.hist)
 
     def save_hist_video(self, video_out, fps=8, frame_size=None, fourcc=None):
-        visualizer.save_hist_video(video_out, self.hist, fps=fps, frame_size=frame_size, fourcc=fourcc)
+        save_hist_video(video_out, self.hist, fps=fps, frame_size=frame_size, fourcc=fourcc)
 
 
 if __name__ == "__main__":
