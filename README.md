@@ -30,8 +30,9 @@ import ludopy
 import numpy as np
 
 g = ludopy.Game()
+there_is_a_winner = False
 
-while True:
+while not there_is_a_winner:
     (dice, move_pieces, player_pieces, enemy_pieces, player_is_a_winner, there_is_a_winner), player_i = g.get_observation()
 
     if len(move_pieces):
@@ -40,9 +41,6 @@ while True:
         piece_to_move = -1
 
     _, _, _, _, _, there_is_a_winner = g.answer_observation(piece_to_move)
-    if there_is_a_winner:
-        print(f"Player number {there_is_a_winner} is the winner")
-        break
 
 print("Saving history to numpy file")
 g.save_hist(f"game_history.npy")
