@@ -23,6 +23,30 @@ cd LUDOpy
 python setup.py install
 ```
 
+## Random "walk" example:
+```python
+import ludopy
+import numpy as np
+from tqdm import tqdm
+
+g = ludopy.Game()
+
+rounds = 400
+for _ in tqdm(range(rounds)):
+    (dice, move_pieces, player_pieces, enemy_pieces, player_is_a_winner, there_is_a_winner), player_i = g.get_observation()
+
+    if len(move_pieces):
+        piece_to_move = move_pieces[np.random.randint(0, len(move_pieces))]
+    else:
+        piece_to_move = -1
+    g.answer_observation(piece_to_move)
+
+print("Saving history to numpy file")
+g.save_hist(f"game_history.npy")
+print("Saving game video")
+g.save_hist_video(f"game_video.mp4")
+```
+
 ## The rules the game follows:
 
 ### The dice
@@ -67,29 +91,6 @@ The rules are taken from the danish site: http://spilregler.dk/ludo/
 
 ![The image show a example of the board](https://github.com/SimonLBSoerensen/LUDOpy/blob/master/board_example_2.png?raw=true "Board example")
 
-## Random "walk" example:
-```python
-import ludopy
-import numpy as np
-from tqdm import tqdm
-
-g = ludopy.Game()
-
-rounds = 400
-for _ in tqdm(range(rounds)):
-    (dice, move_pieces, player_pieces, enemy_pieces, player_is_a_winner, there_is_a_winner), player_i = g.get_observation()
-
-    if len(move_pieces):
-        piece_to_move = move_pieces[np.random.randint(0, len(move_pieces))]
-    else:
-        piece_to_move = -1
-    g.answer_observation(piece_to_move)
-
-print("Saving history to numpy file")
-g.save_hist(f"game_history.npy")
-print("Saving game video")
-g.save_hist_video(f"game_video.mp4")
-```
 
 # Attribution 
 
