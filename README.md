@@ -24,6 +24,7 @@ python setup.py install
 ```
 
 ## Random "walk" example:
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SimonLBSoerensen/LUDOpy/blob/master/demo/random_walk.ipynb)
 ```python
 import ludopy
 import numpy as np
