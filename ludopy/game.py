@@ -160,7 +160,7 @@ if __name__ == "__main__":
 
     g = Game()
 
-    rounds = 100
+    rounds = 400
     for _ in tqdm(range(rounds)):
         (dice, move_pieces, player_pieces, enemy_pieces, player_is_a_winner, there_is_a_winner), player_i = g.get_observation()
 
@@ -173,6 +173,6 @@ if __name__ == "__main__":
     run_uuid = str(uuid.uuid4())
 
     print("Saving hist to numpy file")
-    g.save_hist(f"../GameSaves/RandomMove/{run_uuid}.npy")
+    g.save_hist(f"{run_uuid}.npy")
     print("Saving hist as video")
-    g.save_hist_video(f"../GameSaves/RandomMove/{run_uuid}.mp4")
+    g.save_hist_video(f"{run_uuid}.mp4")

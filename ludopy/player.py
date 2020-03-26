@@ -144,7 +144,7 @@ class Player:
         new_piece_pos = old_piece_pos + dice
 
         move_enemy_home_from_poss = []
-
+        do_not_check_rule_a = False
         enemy_at_pos, enemy_pieces_at_pos = self.get_enemy_at_pos(new_piece_pos, enemys)
 
         if new_piece_pos < len(BORD_TILES):
@@ -170,7 +170,7 @@ class Player:
                 self.pieces[piece] = new_piece_pos
             else:
                 overshoot = new_piece_pos - GOAL_INDEX
-                new_piece_pos_corrected = GOAL_INDEX - overshoot
+                new_piece_pos_corrected = old_piece_pos - overshoot
                 self.pieces[piece] = new_piece_pos_corrected
 
         # The Home areal
@@ -180,6 +180,7 @@ class Player:
                 self.pieces[piece] = START_INDEX
 
                 # Set the enemy there might be at START_INDEX to moved
+                do_not_check_rule_a = True
                 move_enemy_home_from_poss.append(START_INDEX)
 
         # Star before the home areal
@@ -267,7 +268,7 @@ class Player:
                 # Check if there was a enemy at the pos
                 if enemy_at_pos != NO_ENEMY:
                     # If there is only one enemy then move the enemy home.
-                    if not PLAY_WITH_RULE_A or len(enemy_pieces_at_pos) == 1:
+                    if not do_not_check_rule_a and not PLAY_WITH_RULE_A or len(enemy_pieces_at_pos) == 1:
                         for enemy_piece in enemy_pieces_at_pos:
                             enemys[enemy_at_pos][enemy_piece] = HOME_INDEX
                             # logging.debug(f"Moving enemy {enemy_at_pos}'s pice {enemy_piece} to home")
