@@ -86,6 +86,8 @@ The rules are taken from the danish site: http://spilregler.dk/ludo/
 
 ## The Board
 
+The number inside a piece indicate how many pieces that are at the same tail
+
 ### Example 1
 
 ![The image show a example of the board](https://github.com/SimonLBSoerensen/LUDOpy/blob/master/board_example.png?raw=true "Board example")
@@ -95,6 +97,8 @@ The rules are taken from the danish site: http://spilregler.dk/ludo/
 ![The image show a example of the board](https://github.com/SimonLBSoerensen/LUDOpy/blob/master/board_example_2.png?raw=true "Board example 2")
 
 ### Example of the index method (shown for player 1)
+
+Here the number indicate which index the piece are at
 
 ![Example of the index method (shown for player 1)](https://github.com/SimonLBSoerensen/LUDOpy/blob/master/track.png?raw=true "Index method")
 
