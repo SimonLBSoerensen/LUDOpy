@@ -132,3 +132,7 @@ dmypy.json
 /GameSaves/
 /Work/
 /.idea/
+
+*.npy
+*.mp4
+
