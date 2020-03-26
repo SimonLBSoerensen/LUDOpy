@@ -32,8 +32,8 @@ from tqdm import tqdm
 
 g = ludopy.Game()
 
-rounds = 400
-for _ in tqdm(range(rounds)):
+moves = 400
+for _ in tqdm(range(moves)):
     (dice, move_pieces, player_pieces, enemy_pieces, player_is_a_winner, there_is_a_winner), player_i = g.get_observation()
 
     if len(move_pieces):
