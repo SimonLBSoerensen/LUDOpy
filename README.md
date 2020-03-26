@@ -92,8 +92,11 @@ The rules are taken from the danish site: http://spilregler.dk/ludo/
 
 ### Example 2
 
-![The image show a example of the board](https://github.com/SimonLBSoerensen/LUDOpy/blob/master/board_example_2.png?raw=true "Board example")
+![The image show a example of the board](https://github.com/SimonLBSoerensen/LUDOpy/blob/master/board_example_2.png?raw=true "Board example 2")
 
+### Example of the index method (shown for player 1)
+
+![Example of the index method (shown for player 1)](https://github.com/SimonLBSoerensen/LUDOpy/blob/master/track.png?raw=true "Index method")
 
 # Attribution 
 
