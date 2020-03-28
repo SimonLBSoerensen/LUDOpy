@@ -101,9 +101,3 @@ The number inside a piece indicate how many pieces that are at the same tail
 Here the number indicate which index the piece are at
 
 ![Example of the index method (shown for player 1)](https://github.com/SimonLBSoerensen/LUDOpy/blob/master/track.png?raw=true "Index method")
-
-# Attribution 
-
-The star and glob icons are taken from:
-- Star made by <a href="https://www.flaticon.com/authors/pixel-perfect" title="Pixel perfect">Pixel perfect</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>
-- Glob made by <a href="https://www.flaticon.com/authors/turkkub" title="turkkub">turkkub</a> from <a href="https://www.flaticon.com/" title="Flaticon">www.flaticon.com</a>

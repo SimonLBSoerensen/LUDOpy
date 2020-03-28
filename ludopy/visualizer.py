@@ -211,7 +211,7 @@ glob_mask = cv2.inRange(small_glob, (255, 255, 255), (255, 255, 255)) == 0
 big_star = cv2.imread(os.path.join(folder, "star.png"))
 big_star = cv2.cvtColor(big_star, cv2.COLOR_BGR2RGB)
 small_star = cv2.resize(big_star, (40, 40))
-star_mask = cv2.inRange(small_star, (0, 0, 0), (0, 0, 0)) == 0
+star_mask = cv2.inRange(small_star, (255, 255, 255), (255, 255, 255)) == 0
 
 
 def get_taile_cord(n, m):
