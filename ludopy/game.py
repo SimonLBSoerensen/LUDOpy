@@ -197,6 +197,7 @@ class Game:
     def get_winner_of_game(self):
         """
         Returns the winner of the game
+
         :return winner: If there has been a winner the winner is return if not -1 is returned
         """
         return self.first_winner_was + 1
@@ -214,6 +215,7 @@ class Game:
     def get_piece_hist(self, mode=0):
         """
         Will return the how the pieces was recorded during the game.
+
         :param mode: 0: All recorded pieces is returnt. 1: Only if a change is done there will be a new set of pieces.
         2: Only unique set of pieces (order is preserved)
         :return piece_hist: List of sets of pieces
