@@ -78,8 +78,8 @@ On the playing board there are several special areas and fields.
 - Star fields act as shortcuts that can bring the pieces faster to the target area. If a piece lands on a star, it must be moved to the next star. If it is the star in front of the target area that lands on, the chip is moved directly to the goal.
 
 ### The winner
-The one who first gets all 4 pieces in the finish is the winner. (But you choose if the game ends there or the other players has to fight to the last man standing)
-Goals are the center, and you have to go all the way in and out via your own color to get to the finish. When you have entered the colored fields you can not be hit home.
+The one who first gets all 4 pieces in the goal is the winner. (But you choose if the game ends there or if the other players still has to fight)
+Goal are the center. When you have entered the colored fields you can not be hit home.
 The piece has to be move precisely into the goal otherwise the piece are struck back the exact number of eyes there are to many.
 
 The rules are taken from the danish site: http://spilregler.dk/ludo/
