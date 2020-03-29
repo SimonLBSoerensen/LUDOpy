@@ -82,7 +82,7 @@ The one who first gets all 4 pieces in the goal is the winner. (But you choose i
 Goal are the center. When you have entered the colored fields you can not be hit home.
 The piece has to be move precisely into the goal otherwise the piece are struck back the exact number of eyes there are to many.
 
-The rules are taken from the danish site: http://spilregler.dk/ludo/
+The rules are taken from this danish site: http://spilregler.dk/ludo/
 
 ## The Board
 
