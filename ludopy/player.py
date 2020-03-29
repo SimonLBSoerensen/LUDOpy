@@ -134,7 +134,7 @@ class Player:
         return True
 
     def set_pieces(self, pieces):
-        self.pieces = pieces
+        self.pieces = pieces.copy()
 
     def get_pieces(self):
         return self.pieces.copy()

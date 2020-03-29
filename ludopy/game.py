@@ -72,9 +72,10 @@ class Game:
         self.current_enemys = []
         self.current_start_attempts = 0
 
-    def __gen_observation(self, player_idx):
-        # Roll the dice
-        self.__dice_generator()
+    def __gen_observation(self, player_idx, roll_dice = True):
+        if roll_dice:
+            # Roll the dice
+            self.__dice_generator()
         dice = self.current_dice
 
         player = self.players[player_idx]
@@ -122,7 +123,7 @@ class Game:
         # Set pending observation to true
         self.observation_pending = True
         # Get the current en environment
-        obs = self.__gen_observation(self.current_player)
+        obs = self.__gen_observation(self.current_player, roll_dice=True)
 
         # Add the bord and dice before the move to the history
         self.__add_to_hist()
@@ -190,7 +191,7 @@ class Game:
         self.observation_pending = False
 
         # Get the environment after the move
-        after_obs = self.__gen_observation(self.current_player)
+        after_obs = self.__gen_observation(self.current_player, roll_dice=False)
 
         return after_obs
 
