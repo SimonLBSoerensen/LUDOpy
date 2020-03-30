@@ -182,24 +182,24 @@ TRACK_PLAYER_3 = np.array([2, 9]) + DIFF_3
 TRACK_PLAYER_4 = np.array([9, 14]) + DIFF_4
 
 HOME_TAILES = {
-    1: PLAYER_1_HOME_TAILES,
-    2: PLAYER_2_HOME_TAILES,
-    3: PLAYER_3_HOME_TAILES,
-    4: PLAYER_4_HOME_TAILES
+    0: PLAYER_1_HOME_TAILES,
+    1: PLAYER_2_HOME_TAILES,
+    2: PLAYER_3_HOME_TAILES,
+    3: PLAYER_4_HOME_TAILES
 }
 
 TRACKS = {
-    1: TRACK_PLAYER_1,
-    2: TRACK_PLAYER_2,
-    3: TRACK_PLAYER_3,
-    4: TRACK_PLAYER_4
+    0: TRACK_PLAYER_1,
+    1: TRACK_PLAYER_2,
+    2: TRACK_PLAYER_3,
+    3: TRACK_PLAYER_4
 }
 
 PLAYER_COLORS = {
-    1: PLAYER_1_COLOR,
-    2: PLAYER_2_COLOR,
-    3: PLAYER_3_COLOR,
-    4: PLAYER_4_COLOR
+    0: PLAYER_1_COLOR,
+    1: PLAYER_2_COLOR,
+    2: PLAYER_3_COLOR,
+    3: PLAYER_4_COLOR
 }
 folder, _ = os.path.split(__file__)
 
@@ -312,14 +312,14 @@ def get_tailes_player(player_pieces, player):
 def get_tailes(player_pieces):
     tailes = []
     for player_i, player_pieces in enumerate(player_pieces):
-        tailes.append(get_tailes_player(player_pieces, player_i + 1))
+        tailes.append(get_tailes_player(player_pieces, player_i))
     return tailes
 
 
 def draw_players(board, player_pieces):
     player_tailes = get_tailes(player_pieces)
     for player_i, tailes in enumerate(player_tailes):
-        player_color = PLAYER_COLORS[player_i + 1]
+        player_color = PLAYER_COLORS[player_i]
         for taile, amount in tailes:
             draw_piece(board, taile[0], taile[1], amount, player_color)
 

@@ -43,11 +43,11 @@ class Game:
             pieces = [p.get_pieces() for p in self.players]
             enemy_pieces = None
         else:
-            assert 1 <= seen_from <= 4, "The seen_from has to be between 1 and 4. Indicating the player the pieces are seen from and the nemys are seen from"
+            assert 0 <= seen_from <= 3, "The seen_from has to be between 0 and 3. Indicating the player the pieces are seen from and the nemys are seen from"
             # Get where the players piece are
-            pieces = self.players[seen_from - 1].get_pieces()
+            pieces = self.players[seen_from].get_pieces()
             # Get where the enemy's piece are
-            enemy_pieces = [self.players[e].get_pieces() for e in self.enemys_order[seen_from - 1]]
+            enemy_pieces = [self.players[e].get_pieces() for e in self.enemys_order[seen_from]]
         return pieces, enemy_pieces
 
     def __add_to_hist(self):
@@ -55,7 +55,7 @@ class Game:
         Adds the state of the game to the history
         """
         pieces, _ = self.get_pieces()
-        self.hist.append([pieces, self.current_dice, self.current_player+1, self.round])
+        self.hist.append([pieces, self.current_dice, self.current_player, self.round])
 
     def reset(self):
         """
@@ -84,7 +84,7 @@ class Game:
         self.current_move_pieces = move_pieces
 
         # Get where the players piece are and the enemy's piece are
-        player_pieces, enemy_pieces = self.get_pieces(player_idx+1)
+        player_pieces, enemy_pieces = self.get_pieces(player_idx)
         self.current_enemys = enemy_pieces
         # Check if the player is a winner
         player_is_a_winner = player.player_winner()
@@ -127,7 +127,7 @@ class Game:
 
         # Add the bord and dice before the move to the history
         self.__add_to_hist()
-        return obs, self.current_player + 1
+        return obs, self.current_player
 
     def __count_player(self):
         """
@@ -201,7 +201,7 @@ class Game:
 
         :return winner: If there has been a winner the winner is return if not -1 is returned
         """
-        return self.first_winner_was + 1
+        return self.first_winner_was
 
     def get_hist(self):
         """
