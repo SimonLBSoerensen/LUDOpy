@@ -235,7 +235,7 @@ class Game:
         a video of the game. The history will have been extended when a observation was given and when a
         answer to a observation was given.
 
-        :return list of [pieces, current_dice, first_winner_was, current_player, round]
+        :return hist: list of [pieces, current_dice, first_winner_was, current_player, round]
         """
         return self.hist
 
@@ -245,7 +245,7 @@ class Game:
 
         :param mode: 0: All recorded pieces is returnt. 1: Only if a change is done there will be a new set of pieces. 2: Only unique set of pieces (order is preserved)
 
-        :return piece_hist: List of sets of pieces
+        :return piece_hist: List of sets of pieces [player 1, player 2, player 3, player 4]
         """
         piece_hist = [self.hist[0][0]]
         for h in self.hist[1:]:
