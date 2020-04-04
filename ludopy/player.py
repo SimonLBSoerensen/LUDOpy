@@ -58,40 +58,12 @@ class Player:
     """
     A class used by the Game class
     This class is not needed for normal use
-
-    ...
-
-    Attributes
-    ----------
-    pieces : list
-        List of the index's of the players pieces
-    number_of_pieces : int
-        The number of pieces the player has
-    sound : str
-        the sound that the animal makes
-    num_legs : int
-        the number of legs the animal has (default 4)
-
-    Methods
-    -------
-    other_enemy_pos(pos)
-        Returns the index's the other players has to be in to be in the same location as the one given in pos
-    get_enemy_at_pos(pos, enemys)
-        Returns the enemy's and the pieces they have at the given location
-    get_pieces_that_can_move(dice)
-        Return the pieces that can move with the given dice
-    player_winner()
-        Returns rather the player is a winner or not
-    set_pieces(pieces)
-        Sets the players pieces
-    get_pieces()
-        Returns the players pieces
-    move_piece(piece, dice, enemys)
-        Move the players piece the given dice following the game rules. Returns the new locations of the enemy's pieces
-    set_all_pices_to_home()
-        Sets all the players pieces to the home index
     """
+
     def __init__(self):
+        """
+        Makes a player with 4 pieces all at the home locations
+        """
         self.pieces = []
         self.number_of_pieces = 4
         self.set_all_pices_to_home()
