@@ -55,12 +55,55 @@ ENEMY_3_INDX_AT_HOME = 14  # HOME_AREAL_INDEXS[0] - 6 - i * 13 # i = 3
 
 
 class Player:
+    """
+    A class used by the Game class
+    This class is not needed for normal use
+
+    ...
+
+    Attributes
+    ----------
+    pieces : list
+        List of the index's of the players pieces
+    number_of_pieces : int
+        The number of pieces the player has
+    sound : str
+        the sound that the animal makes
+    num_legs : int
+        the number of legs the animal has (default 4)
+
+    Methods
+    -------
+    other_enemy_pos(pos)
+        Returns the index's the other players has to be in to be in the same location as the one given in pos
+    get_enemy_at_pos(pos, enemys)
+        Returns the enemy's and the pieces they have at the given location
+    get_pieces_that_can_move(dice)
+        Return the pieces that can move with the given dice
+    player_winner()
+        Returns rather the player is a winner or not
+    set_pieces(pieces)
+        Sets the players pieces
+    get_pieces()
+        Returns the players pieces
+    move_piece(piece, dice, enemys)
+        Move the players piece the given dice following the game rules. Returns the new locations of the enemy's pieces
+    set_all_pices_to_home()
+        Sets all the players pieces to the home index
+    """
     def __init__(self):
         self.pieces = []
         self.number_of_pieces = 4
         self.set_all_pices_to_home()
 
     def other_enemy_pos(self, pos):
+        """
+        Returns the index's the other players has to be in to be in the same location as the one given in pos
+
+        :param pos (int): The location to check for
+
+        :return: The locations the enemy's pieces has to be at
+        """
         if pos == 0:
             return [[-1], [-1], [-1], [-1]]
 
@@ -85,6 +128,17 @@ class Player:
         return enemy_pos
 
     def get_enemy_at_pos(self, pos, enemys):
+        """
+        Returns the enemy's and the pieces they have at the given location
+
+        :param pos (int): The location to check for
+
+        :param enemys: The lications for the enemy's pieces in a list of 4 lists
+
+        :returns:
+        - enemy_at_pos: The enemy's there are at the location
+        - enemy_pieces_at_pos: The pieces the enemy's has at the location
+        """
         # Get the pos the enemy's has to be at to be at the same pos
         other_enemy_pos_at_pos = self.other_enemy_pos(pos)
         # Check if there is a enemy and how many pieces the enemy has there
@@ -109,6 +163,13 @@ class Player:
         return enemy_at_pos, enemy_pieces_at_pos
 
     def get_pieces_that_can_move(self, dice):
+        """
+        Return the pieces that can move with the given dice
+
+        :param dice: The dice the move will be done with
+
+        :return: movable_pieces (list): A list with the pieces that can be moved
+        """
         movable_pieces = []
         # Go though all the pieces
         for piece_i, piece_place in enumerate(self.pieces):
@@ -125,6 +186,11 @@ class Player:
         return movable_pieces
 
     def player_winner(self):
+        """
+        Returns rather the player is a winner or not
+
+        :return: winner (bool): A bool that indicate rather the player is a winner or not
+        """
         # Go though all the pieces
         for piece_place in self.pieces:
             # If a piece is not at the goal is not the winner
@@ -134,12 +200,30 @@ class Player:
         return True
 
     def set_pieces(self, pieces):
+        """
+        Sets the players pieces
+
+        :param pieces: The pieces to set the players pieces to
+        """
         self.pieces = pieces.copy()
 
     def get_pieces(self):
+        """
+        Returns the players pieces
+
+        :return pieces: The players pieces
+        """
         return self.pieces.copy()
 
     def move_piece(self, piece, dice, enemys):
+        """
+        Move the players piece the given dice following the game rules. Returns the new locations of the enemy's pieces
+
+        :param piece: The piece to move
+        :param dice: The dice to make the move with
+        :param enemys: The enemy's pieces
+        :return: The new locations of the enemy's pieces
+        """
         old_piece_pos = self.pieces[piece]
         new_piece_pos = old_piece_pos + dice
 
@@ -280,6 +364,9 @@ class Player:
         return enemys
 
     def set_all_pices_to_home(self):
+        """
+        Sets all the players pieces to the home index
+        """
         self.pieces = []
         for i in range(self.number_of_pieces):
             self.pieces.append(HOME_INDEX)
