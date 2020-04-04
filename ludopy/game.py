@@ -22,6 +22,7 @@ class Game:
             2: [3, 0, 1],
             3: [0, 1, 2]
         }
+        self.game_winners = []
 
     def __dice_generator(self):
         """
@@ -35,9 +36,12 @@ class Game:
 
         :param seen_from: indicate which player the pieces and enemy pieces are seen from. If None then the pieces
         from all 4 player are given and no enemy pieces
-        :return pieces: The pieces for alle the players (if seen_from = None) else the pieces for the
+
+        :returns:
+        - pieces: The pieces for alle the players (if seen_from = None) else the pieces for the
         player given in seen_from
-        :return enemy_pieces: The pieces of the enemys if a player is given in seen_from
+
+        - enemy_pieces: The pieces of the enemys if a player is given in seen_from
         """
         if seen_from is None:
             pieces = [p.get_pieces() for p in self.players]
@@ -71,6 +75,7 @@ class Game:
         self.current_move_pieces = []
         self.current_enemys = []
         self.current_start_attempts = 0
+        self.game_winners = []
 
     def __gen_observation(self, player_idx, roll_dice = True):
         if roll_dice:
@@ -111,10 +116,12 @@ class Game:
         Return the state/observation of the game and which players turn it is
         A given observation has to be answered before a new one can be given.
 
-        :return obs: The observation taken of the state of the game seen from the player
+        :returns:
+        - obs: The observation taken of the state of the game seen from the player
         given in the return current_player (dice, move_pieces, player_pieces, enemy_pieces,
         player_is_a_winner, there_is_a_winner)
-        :return current_player: Which players turn it is
+
+        - current_player: Which players turn it is
         """
         # Check if there is a observation pending
         if self.observation_pending:
@@ -165,8 +172,14 @@ class Game:
             pass # This line is present for readability
 
         # Check if the player now is the winner
-        if self.first_winner_was == -1 and self.players[self.current_player].player_winner():
-            self.first_winner_was = self.current_player
+        player_is_a_winner = self.players[self.current_player].player_winner()
+        if player_is_a_winner:
+            # Check if player is the first winner
+            if self.first_winner_was == -1:
+                self.first_winner_was = self.current_player
+            # Check if player has been added to game_winners
+            if self.current_player not in self.game_winners:
+                self.game_winners.append(self.current_player)
 
         # Add the bord after the move to the history
         self.__add_to_hist()
@@ -203,13 +216,29 @@ class Game:
         """
         return self.first_winner_was
 
+    def get_winners_of_game(self):
+        """
+        Returns the winners of the game
+
+        :return gameWinners: A list of the winners of the game in the order they got all piece in goal
+        """
+        return self.game_winners
+
+    def all_players_finish(self):
+        """
+        Returns rather all players has finish
+
+        :return allFinish: Bool rather all players has finish the game
+        """
+        return len(self.game_winners) == len(self.players)
+
     def get_hist(self):
         """
         Returns the history there has been recorded during the game. This history can be used to make
         a video of the game. The history will have been extended when a observation was given and when a
         answer to a observation was given.
 
-        :returns list of [pieces, current_dice, first_winner_was, current_player, round]
+        :return list of [pieces, current_dice, first_winner_was, current_player, round]
         """
         return self.hist
 
@@ -219,6 +248,7 @@ class Game:
 
         :param mode: 0: All recorded pieces is returnt. 1: Only if a change is done there will be a new set of pieces.
         2: Only unique set of pieces (order is preserved)
+
         :return piece_hist: List of sets of pieces
         """
         piece_hist = [self.hist[0][0]]
