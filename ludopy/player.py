@@ -56,8 +56,7 @@ ENEMY_3_INDX_AT_HOME = 14  # HOME_AREAL_INDEXS[0] - 6 - i * 13 # i = 3
 
 class Player:
     """
-    A class used by the Game class
-    This class is not needed for normal use
+    A class used by the Game class. This class is not needed for normal use
     """
 
     def __init__(self):
@@ -72,9 +71,10 @@ class Player:
         """
         Returns the index's the other players has to be in to be in the same location as the one given in pos
 
-        :param pos (int): The location to check for
-
-        :return: The locations the enemy's pieces has to be at
+        :param pos: The location to check for
+        :type pos: int
+        :return enemy_pos: The locations the enemy's pieces has to be at
+        :rtype enemy_pos: list with 4 int's
         """
         if pos == 0:
             return [[-1], [-1], [-1], [-1]]
@@ -103,13 +103,16 @@ class Player:
         """
         Returns the enemy's and the pieces they have at the given location
 
-        :param pos (int): The location to check for
-
+        :param pos: The location to check for
+        :type pos: int
         :param enemys: The lications for the enemy's pieces in a list of 4 lists
 
         :returns:
         - enemy_at_pos: The enemy's there are at the location
         - enemy_pieces_at_pos: The pieces the enemy's has at the location
+        :rtype enemy_at_pos: list
+        :rtype enemy_pieces_at_pos: list of list
+
         """
         # Get the pos the enemy's has to be at to be at the same pos
         other_enemy_pos_at_pos = self.other_enemy_pos(pos)
@@ -139,8 +142,10 @@ class Player:
         Return the pieces that can move with the given dice
 
         :param dice: The dice the move will be done with
+        :type dice: int
+        :return: movable_pieces: A list with the pieces that can be moved
+        :rtype movable_pieces: list
 
-        :return: movable_pieces (list): A list with the pieces that can be moved
         """
         movable_pieces = []
         # Go though all the pieces
@@ -161,7 +166,8 @@ class Player:
         """
         Returns rather the player is a winner or not
 
-        :return: winner (bool): A bool that indicate rather the player is a winner or not
+        :return: winner: A bool that indicate rather the player is a winner or not
+        :rtype winner: bool
         """
         # Go though all the pieces
         for piece_place in self.pieces:
@@ -184,6 +190,7 @@ class Player:
         Returns the players pieces
 
         :return pieces: The players pieces
+        :rtype pieces: list
         """
         return self.pieces.copy()
 
@@ -192,9 +199,14 @@ class Player:
         Move the players piece the given dice following the game rules. Returns the new locations of the enemy's pieces
 
         :param piece: The piece to move
+        :type piece: int
         :param dice: The dice to make the move with
+        :type dice: int
         :param enemys: The enemy's pieces
-        :return: The new locations of the enemy's pieces
+        :type enemys: list with 4 lists each with 4 int's
+        :return enemys: The new locations of the enemy's pieces
+        :rtype enemys: list with 4 lists each with 4 int's
+
         """
         old_piece_pos = self.pieces[piece]
         new_piece_pos = old_piece_pos + dice

@@ -6,8 +6,7 @@ from tqdm import tqdm
 
 class Game:
     """
-    The Game
-    This class is the only needed class for normal use
+    The Game. This class is the only needed class for normal use
     """
 
     def __init__(self):
@@ -44,10 +43,12 @@ class Game:
         Returns the pieces places on the board
 
         :param seen_from: indicate which player the pieces and enemy pieces are seen from. If None then the pieces from all 4 player are given and no enemy pieces
-
+        :type seen_from: int
         :returns:
         - pieces: The pieces for alle the players (if seen_from = None) else the pieces for the player given in seen_from
         - enemy_pieces: The pieces of the enemys if a player is given in seen_from
+        :rtype pieces: list of 4 int's
+        :rtype enemy_pieces: list with 4 lists each with 4 int's
 
         """
         if seen_from is None:
@@ -114,9 +115,9 @@ class Game:
         Will set the enemy pieces to the pieces given in enemy_pieces
 
         :param player_idx: The player the enemys are seen from
-
+        :type player_idx: int
         :param enemy_pieces: The pieces to update
-
+        :type enemy_pieces: list with 4 lists each with 4 int's
         """
         # Go throng the enemy's and set the changes in there piece
         for e_i, e in enumerate(self.enemys_order[player_idx]):
@@ -130,6 +131,8 @@ class Game:
         :returns:
         - obs: The observation taken of the state of the game seen from the player given in the return current_player (dice, move_pieces, player_pieces, enemy_pieces, player_is_a_winner, there_is_a_winner)
         - current_player: Which players turn it is
+        :rtype obs: (int, list with upto 4 int's, list with 4 int's, list of 4 lists with 4 int's, bool, bool)
+        :rtype current_player: int
 
         """
         # Check if there is a observation pending
@@ -162,9 +165,9 @@ class Game:
         Answers a observation. A observation has to be given before a answer can be given.
 
         :param piece_to_move: Which piece to move. If there was no pieces there cloud be moved the parameter is ignored
-
+        :type piece_to_move: int
         :return obs: Who the game was after the given move was done. obs is: (dice, move_pieces, player_pieces, enemy_pieces, player_is_a_winner, there_is_a_winner)
-
+        :rtype obs: (int, list with upto 4 int's, list with 4 int's, list of 4 lists with 4 int's, bool, bool)
         """
         # Check if there is a observation pending
         if not self.observation_pending:
@@ -224,7 +227,7 @@ class Game:
         Returns the winner of the game
 
         :return winner: If there has been a winner the winner is return if not -1 is returned
-
+        :rtype winner: bool
         """
         return self.first_winner_was
 
@@ -233,7 +236,7 @@ class Game:
         Returns the winners of the game
 
         :return gameWinners: A list of the winners of the game in the order they got all piece in goal
-
+        :rtype gameWinners: list with upto 4 int's
         """
         return self.game_winners
 
@@ -242,7 +245,7 @@ class Game:
         Returns rather all players has finish
 
         :return allFinish: Bool rather all players has finish the game
-
+        :rtype allFinish: bool
         """
         return len(self.game_winners) == len(self.players)
 
@@ -253,7 +256,7 @@ class Game:
         answer to a observation was given.
 
         :return hist: list of [pieces, current_dice, first_winner_was, current_player, round]
-
+        :rtype hist: [list with 4 lists with 4 int's, int, bool, int, int]
         """
         return self.hist
 
@@ -262,9 +265,9 @@ class Game:
         Will return the how the pieces was recorded during the game.
 
         :param mode: 0: All recorded pieces is returnt. 1: Only if a change is done there will be a new set of pieces. 2: Only unique set of pieces (order is preserved)
-
+        :type mode: int
         :return piece_hist: List of sets of pieces [player 1, player 2, player 3, player 4]
-
+        :rtype piece_hist: list of 4 lists with 4 int's
         """
         piece_hist = [self.hist[0][0]]
         for h in self.hist[1:]:
@@ -289,7 +292,7 @@ class Game:
         Will render the last record in the history
 
         :return board_img: A image of the board
-
+        :rtype board_img: ndarray, RGB colorspace
         """
         board_img = make_img_of_board(*self.hist[-1])
         return board_img
@@ -299,6 +302,7 @@ class Game:
         Saves the history of the game as a npy file
 
         :param file_name: The file name to save under. Has to have the .npy (numpy file) extension
+        :type file_name: str
 
         """
         file_ext = file_name.split(".")[-1]
@@ -310,12 +314,13 @@ class Game:
         Saves a video of the game history
 
         :param video_out: The file name to save under
-
+        :type video_out: str
         :param fps: Frames per second
-
+        :type fps: float
         :param frame_size: The frame size to save in (width, height). If None is given the full board size is used
-
+        :type frame_size: tuple
         :param fourcc: FourCC code to be used. If None is given the FourCC code will be tried to create fro the file extension (works on .mp4 and .avi)
+        :type fourcc: str
 
         """
         save_hist_video(video_out, self.hist, fps=fps, frame_size=frame_size, fourcc=fourcc)
