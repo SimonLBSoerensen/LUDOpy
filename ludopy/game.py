@@ -34,12 +34,10 @@ class Game:
         """
         Returns the pieces places on the board
 
-        :param seen_from: indicate which player the pieces and enemy pieces are seen from. If None then the pieces
-        from all 4 player are given and no enemy pieces
+        :param seen_from: indicate which player the pieces and enemy pieces are seen from. If None then the pieces from all 4 player are given and no enemy pieces
 
         :returns:
-        - pieces: The pieces for alle the players (if seen_from = None) else the pieces for the
-        player given in seen_from
+        - pieces: The pieces for alle the players (if seen_from = None) else the pieces for the player given in seen_from
 
         - enemy_pieces: The pieces of the enemys if a player is given in seen_from
         """
@@ -105,6 +103,7 @@ class Game:
         Will set the enemy pieces to the pieces given in enemy_pieces
 
         :param player_idx: The player the enemys are seen from
+
         :param enemy_pieces: The pieces to update
         """
         # Go throng the enemy's and set the changes in there piece
@@ -117,9 +116,7 @@ class Game:
         A given observation has to be answered before a new one can be given.
 
         :returns:
-        - obs: The observation taken of the state of the game seen from the player
-        given in the return current_player (dice, move_pieces, player_pieces, enemy_pieces,
-        player_is_a_winner, there_is_a_winner)
+        - obs: The observation taken of the state of the game seen from the player given in the return current_player (dice, move_pieces, player_pieces, enemy_pieces, player_is_a_winner, there_is_a_winner)
 
         - current_player: Which players turn it is
         """
@@ -152,8 +149,8 @@ class Game:
         Answers a observation. A observation has to be given before a answer can be given.
 
         :param piece_to_move: Which piece to move. If there was no pieces there cloud be moved the parameter is ignored
-        :return obs: Who the game was after the given move was done
-        (dice, move_pieces, player_pieces, enemy_pieces, player_is_a_winner, there_is_a_winner)
+
+        :return obs: Who the game was after the given move was done. obs is: (dice, move_pieces, player_pieces, enemy_pieces, player_is_a_winner, there_is_a_winner)
         """
         # Check if there is a observation pending
         if not self.observation_pending:
@@ -246,8 +243,7 @@ class Game:
         """
         Will return the how the pieces was recorded during the game.
 
-        :param mode: 0: All recorded pieces is returnt. 1: Only if a change is done there will be a new set of pieces.
-        2: Only unique set of pieces (order is preserved)
+        :param mode: 0: All recorded pieces is returnt. 1: Only if a change is done there will be a new set of pieces. 2: Only unique set of pieces (order is preserved)
 
         :return piece_hist: List of sets of pieces
         """
@@ -293,10 +289,12 @@ class Game:
         Saves a video of the game history
 
         :param video_out: The file name to save under
+
         :param fps: Frames per second
+
         :param frame_size: The frame size to save in (width, height). If None is given the full board size is used
-        :param fourcc: FourCC code to be used.
-        If None is given the FourCC code will be tried to create fro the file extension (works on .mp4 and .avi)
+
+        :param fourcc: FourCC code to be used. If None is given the FourCC code will be tried to create fro the file extension (works on .mp4 and .avi)
         """
         save_hist_video(video_out, self.hist, fps=fps, frame_size=frame_size, fourcc=fourcc)
 
