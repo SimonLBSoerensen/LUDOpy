@@ -55,7 +55,7 @@ g.save_hist_video(f"game_video.mp4")
 ### The dice
 A a six-sided dice is used. With it, you have to hit six to move a piece out of the starting area, 
 while all other throws give the right to move a piece the number of fields the eyes show.
- Extra throws are given when hitting six (no limit to how many times in a row). 
+Extra throws are given when hitting six (no limit to how many times in a row). 
 
 ### At the start
 Players take turns alternating with the dice.
