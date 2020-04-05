@@ -55,11 +55,8 @@ def enemy_pos_at_pos(pos):
     :param pos: The location to check for
     :type pos: int
     :return enemy_pos: The locations the enemy's pieces has to be at
-    :rtype enemy_pos: list with 4 int's
+    :rtype enemy_pos: list of list
     """
-    if pos == 0:
-        return [[-1], [-1], [-1], [-1]]
-
     enemy_pos = []
 
     for enemy_start_pos, enemy_pos_at_start in [[ENEMY_1_GLOB_INDX, ENEMY_1_INDX_AT_HOME],
