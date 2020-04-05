@@ -4,7 +4,7 @@ This is a implementation of the LUDO game in python for use in AI or whatever yo
 
 For normal use of ludopy only ludopy.Game should be needed.
 
-[![PyPI version](https://badge.fury.io/py/ludopy.svg)](https://badge.fury.io/py/ludopy) [![Documentation Status](https://readthedocs.org/projects/ludopy/badge/?version=latest)](https://ludopy.readthedocs.io/en/latest/?badge=latest)
+[![PyPI version](https://badge.fury.io/py/ludopy.svg)](https://badge.fury.io/py/ludopy) [![Documentation Status](https://readthedocs.org/projects/ludopy/badge/?version=latest)](https://ludopy.readthedocs.io/en/latest/?badge=latest) ![Python application](https://github.com/SimonLBSoerensen/LUDOpy/workflows/Python%20application/badge.svg)
 
 # Installation
 - Recommended: Install ludopy from PyPI: 
