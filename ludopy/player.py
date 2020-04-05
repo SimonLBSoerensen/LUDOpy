@@ -71,7 +71,7 @@ def enemy_pos_at_pos(pos):
         if pos == enemy_start_pos:
             pos_enemy = [START_INDEX, HOME_AREAL_INDEXS[0]]
         elif pos < 0:
-            pos_enemy = enemy_pos_at_start - pos
+            pos_enemy = max(enemy_pos_at_start + pos, -1)
         elif START_INDEX <= pos < enemy_start_pos:
             pos_enemy = [pos + pre_offset]
         elif pos > HOME_AREAL_INDEXS[0] or pos == HOME_INDEX:
