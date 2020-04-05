@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="ludopy",
-    version="1.1.8",
+    version="1.1.9",
     author="Simon L. B. Sørensen",
     author_email="simonlyckbjaert@hotmail.com",
     description="LUDO python",
@@ -27,3 +27,4 @@ setuptools.setup(
 
 #python setup.py sdist bdist_wheel
 #python -m twine upload dist/*
+#python -m twine upload --repository-url https://test.pypi.org/legacy/ dist/*
