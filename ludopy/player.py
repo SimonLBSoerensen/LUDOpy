@@ -1,11 +1,5 @@
 import numpy as np
-import logging
 
-# print("NUMPY IS SEEDED!!!!")
-# np.random.seed(321)
-
-# log_level = logging.ERROR
-# logging.basicConfig(filename='player.log', level=log_level)
 TOTAL_NUMBER_OF_TAILES = 60
 DICE_MOVE_OUT_OF_HOME = 6
 NO_ENEMY = -1
@@ -54,6 +48,80 @@ ENEMY_2_INDX_AT_HOME = 27  # HOME_AREAL_INDEXS[0] - 6 - i * 13 # i = 2
 ENEMY_3_INDX_AT_HOME = 14  # HOME_AREAL_INDEXS[0] - 6 - i * 13 # i = 3
 
 
+def enemy_pos_at_pos(pos):
+    """
+    Returns the index's the other players has to be in to be in the same location as the one given in pos
+
+    :param pos: The location to check for
+    :type pos: int
+    :return enemy_pos: The locations the enemy's pieces has to be at
+    :rtype enemy_pos: list with 4 int's
+    """
+    if pos == 0:
+        return [[-1], [-1], [-1], [-1]]
+
+    enemy_pos = []
+
+    for enemy_start_pos, enemy_pos_at_start in [[ENEMY_1_GLOB_INDX, ENEMY_1_INDX_AT_HOME],
+                                                [ENEMY_2_GLOB_INDX, ENEMY_2_INDX_AT_HOME],
+                                                [ENEMY_3_GLOB_INDX, ENEMY_3_INDX_AT_HOME]]:
+        post_offset = enemy_start_pos - 1
+        pre_offset = enemy_pos_at_start - 1
+
+        if pos == enemy_start_pos:
+            pos_enemy = [START_INDEX, HOME_AREAL_INDEXS[0]]
+        elif pos < 0:
+            pos_enemy = enemy_pos_at_start - pos
+        elif START_INDEX <= pos < enemy_start_pos:
+            pos_enemy = [pos + pre_offset]
+        elif pos > HOME_AREAL_INDEXS[0] or pos == HOME_INDEX:
+            pos_enemy = [-1]
+        else:
+            pos_enemy = [pos - post_offset]
+        enemy_pos.append(pos_enemy)
+
+    return enemy_pos
+
+
+def get_enemy_at_pos(pos, enemys):
+    """
+    Returns the enemy's and the pieces they have at the given location
+
+    :param pos: The location to check for
+    :type pos: int
+    :param enemys: The locations for the enemy's pieces in a list of 4 lists
+
+    :returns:
+    - enemy_at_pos: The enemy's there are at the location
+    - enemy_pieces_at_pos: The pieces the enemy's has at the location
+    :rtype enemy_at_pos: list
+    :rtype enemy_pieces_at_pos: list of list
+
+    """
+    # Get the pos the enemy's has to be at to be at the same pos
+    other_enemy_pos_at_pos = enemy_pos_at_pos(pos)
+    # Check if there is a enemy and how many pieces the enemy has there
+    enemy_at_pos = NO_ENEMY
+    enemy_pieces_at_pos = []
+
+    for enemy_i, other_enemy_pos in enumerate(other_enemy_pos_at_pos):
+        # Check if there already is found a enemy at pos.
+        if enemy_at_pos != NO_ENEMY:
+            # If there is then stop checking for more (there can only be one)
+            break
+
+        for o_pos in other_enemy_pos:
+            if o_pos == NULL_POS:
+                continue
+
+            for enemy_pice, enemy_pos in enumerate(enemys[enemy_i]):
+                if enemy_pos == o_pos:
+                    enemy_pieces_at_pos.append(enemy_pice)
+                    enemy_at_pos = enemy_i
+
+    return enemy_at_pos, enemy_pieces_at_pos
+
+
 class Player:
     """
     A class used by the Game class. This class is not needed for normal use
@@ -65,77 +133,7 @@ class Player:
         """
         self.pieces = []
         self.number_of_pieces = 4
-        self.set_all_pices_to_home()
-
-    def other_enemy_pos(self, pos):
-        """
-        Returns the index's the other players has to be in to be in the same location as the one given in pos
-
-        :param pos: The location to check for
-        :type pos: int
-        :return enemy_pos: The locations the enemy's pieces has to be at
-        :rtype enemy_pos: list with 4 int's
-        """
-        if pos == 0:
-            return [[-1], [-1], [-1], [-1]]
-
-        enemy_pos = []
-
-        for enemy_start_pos, enemy_pos_at_start in [[ENEMY_1_GLOB_INDX, ENEMY_1_INDX_AT_HOME],
-                                                    [ENEMY_2_GLOB_INDX, ENEMY_2_INDX_AT_HOME],
-                                                    [ENEMY_3_GLOB_INDX, ENEMY_3_INDX_AT_HOME]]:
-            post_offset = enemy_start_pos - 1
-            pre_offset = enemy_pos_at_start - 1
-
-            if pos == enemy_start_pos:
-                pos_enemy = [START_INDEX, HOME_AREAL_INDEXS[0]]
-            elif START_INDEX <= pos < enemy_start_pos:
-                pos_enemy = [pos + pre_offset]
-            elif pos > HOME_AREAL_INDEXS[0]:
-                pos_enemy = [-1]
-            else:
-                pos_enemy = [pos - post_offset]
-            enemy_pos.append(pos_enemy)
-
-        return enemy_pos
-
-    def get_enemy_at_pos(self, pos, enemys):
-        """
-        Returns the enemy's and the pieces they have at the given location
-
-        :param pos: The location to check for
-        :type pos: int
-        :param enemys: The lications for the enemy's pieces in a list of 4 lists
-
-        :returns:
-        - enemy_at_pos: The enemy's there are at the location
-        - enemy_pieces_at_pos: The pieces the enemy's has at the location
-        :rtype enemy_at_pos: list
-        :rtype enemy_pieces_at_pos: list of list
-
-        """
-        # Get the pos the enemy's has to be at to be at the same pos
-        other_enemy_pos_at_pos = self.other_enemy_pos(pos)
-        # Check if there is a enemy and how many pieces the enemy has there
-        enemy_at_pos = NO_ENEMY
-        enemy_pieces_at_pos = []
-
-        for enemy_i, other_enemy_pos in enumerate(other_enemy_pos_at_pos):
-            # Check if there already is found a enemy at pos.
-            if enemy_at_pos != NO_ENEMY:
-                # If there is then stop checking for more (there can only be one)
-                break
-
-            for o_pos in other_enemy_pos:
-                if o_pos == NULL_POS:
-                    continue
-
-                for enemy_pice, enemy_pos in enumerate(enemys[enemy_i]):
-                    if enemy_pos == o_pos:
-                        enemy_pieces_at_pos.append(enemy_pice)
-                        enemy_at_pos = enemy_i
-
-        return enemy_at_pos, enemy_pieces_at_pos
+        self.set_all_pieces_to_home()
 
     def get_pieces_that_can_move(self, dice):
         """
@@ -213,13 +211,7 @@ class Player:
 
         move_enemy_home_from_poss = []
         do_not_check_rule_a = False
-        enemy_at_pos, enemy_pieces_at_pos = self.get_enemy_at_pos(new_piece_pos, enemys)
-
-        if new_piece_pos < len(BORD_TILES):
-            goging_to = BORD_TILES[new_piece_pos]
-        else:
-            goging_to = BORD_TILES[old_piece_pos]
-        # logging.debug(f"Moving piece {piece} with dice {dice} to {new_piece_pos} that are a {goging_to} and the enemys is {enemys} at the new pos there is {enemy_at_pos} there has {enemy_pieces_at_pos}")
+        enemy_at_pos, enemy_pieces_at_pos = get_enemy_at_pos(new_piece_pos, enemys)
 
         # If the dice is 0 then no movement can be done
         if dice == 0:
@@ -228,12 +220,10 @@ class Player:
         # At goal
         elif BORD_TILES[old_piece_pos] == TAILE_GOAL:
             # The piece can not move
-            # logging.debug(f"Pice is at goal")
             pass
 
         # Goal areal
         elif BORD_TILES[old_piece_pos] == TAILE_GOAL_AREAL:
-            # logging.debug(f"Pice is at Goal areal")
             if new_piece_pos <= GOAL_INDEX:
                 self.pieces[piece] = new_piece_pos
             else:
@@ -243,7 +233,6 @@ class Player:
 
         # The Home areal
         elif BORD_TILES[old_piece_pos] == TAILE_HOME:
-            # logging.debug(f"Pice is at Home areal")
             if dice == DICE_MOVE_OUT_OF_HOME:
                 self.pieces[piece] = START_INDEX
 
@@ -253,7 +242,6 @@ class Player:
 
         # Star before the home areal
         elif new_piece_pos == STAR_AT_GOAL_AREAL_INDX:
-            # logging.debug(f"Pice is at Star before the home areal")
             self.pieces[piece] = GOAL_INDEX
 
             # Set the enemy there might be at STAR_AT_GOAL_AREAL_INDX to moved
@@ -268,19 +256,17 @@ class Player:
             next_star_pos = STAR_INDEXS[next_star_staridx]
 
             self.pieces[piece] = next_star_pos
-            # logging.debug(f"Pice is at one of the other starts, moving from start {(present_star_staridx, new_piece_pos)} to star {(next_star_staridx, next_star_pos)}")
 
             # Set the enemy there might be at first star or the start there will be jump to to be moved
             if enemy_at_pos != NO_ENEMY:
                 move_enemy_home_from_poss.append(new_piece_pos)
 
-            next_star_enemy_at_pos, next_star_enemy_pieces_at_pos = self.get_enemy_at_pos(next_star_pos, enemys)
+            next_star_enemy_at_pos, next_star_enemy_pieces_at_pos = get_enemy_at_pos(next_star_pos, enemys)
             if next_star_enemy_at_pos != NO_ENEMY:
                 move_enemy_home_from_poss.append(next_star_pos)
 
         # Globs there are not own by enemy
         elif BORD_TILES[new_piece_pos] == TAILE_GLOB:
-            # logging.debug(f"Pice is at a glob there is NOT own by a other player")
             if enemy_at_pos != NO_ENEMY:
                 self.pieces[piece] = HOME_INDEX
             else:
@@ -288,7 +274,6 @@ class Player:
 
         # Globs there are own by enemy
         elif BORD_TILES[new_piece_pos] in LIST_TAILE_ENEMY_GLOBS:
-            # logging.debug(f"Pice is at a glob there is own by a other player")
             # Get the enemy there own the glob
             globs_enemy = LIST_TAILE_ENEMY_GLOBS.index(BORD_TILES[new_piece_pos])
             # Check if there is a enemy at the glob
@@ -309,13 +294,8 @@ class Player:
                 BORD_TILES[new_piece_pos] == TAILE_FREE or \
                 BORD_TILES[old_piece_pos] == TAILE_GLOB or \
                 BORD_TILES[old_piece_pos] == TAILE_STAR:
-            # logging.debug(f"Pice is at free taile. enemy_at_pos:{enemy_at_pos}")
             if enemy_at_pos != NO_ENEMY:
                 move_enemy_home_from_poss.append(new_piece_pos)
-                # logging.debug(f"There was a nermy at free taile. Adding pos: {new_piece_pos}")
-            else:
-                pass
-                # logging.debug(f"There was no enemy")
             self.pieces[piece] = new_piece_pos
 
         # If the case was not caught then there is a error
@@ -327,27 +307,23 @@ class Player:
 
         # Check if there is any enemy there has to be moved
         if len(move_enemy_home_from_poss):
-            # logging.debug(f"There is pices to move home")
             # Go through the pos where enemy has to be moved from
             for pos in move_enemy_home_from_poss:
                 # Get the enemy at the pos
-                enemy_at_pos, enemy_pieces_at_pos = self.get_enemy_at_pos(pos, enemys)
-                # logging.debug(f"Moving from pos {pos} where there are {(enemy_at_pos, enemy_pieces_at_pos)}")
+                enemy_at_pos, enemy_pieces_at_pos = get_enemy_at_pos(pos, enemys)
                 # Check if there was a enemy at the pos
                 if enemy_at_pos != NO_ENEMY:
                     # If there is only one enemy then move the enemy home.
                     if not do_not_check_rule_a and not PLAY_WITH_RULE_A or len(enemy_pieces_at_pos) == 1:
                         for enemy_piece in enemy_pieces_at_pos:
                             enemys[enemy_at_pos][enemy_piece] = HOME_INDEX
-                            # logging.debug(f"Moving enemy {enemy_at_pos}'s pice {enemy_piece} to home")
                     # If there is more than one then move own piece home
                     else:
-                        # logging.debug(f"Moving own piece to home. There was more than one enemy piece")
                         self.pieces[piece] = HOME_INDEX
 
         return enemys
 
-    def set_all_pices_to_home(self):
+    def set_all_pieces_to_home(self):
         """
         Sets all the players pieces to the home index
         """
@@ -355,66 +331,3 @@ class Player:
         for i in range(self.number_of_pieces):
             self.pieces.append(HOME_INDEX)
 
-
-if __name__ == "__main__":
-    from tqdm import tqdm
-    import uuid
-
-    players = [Player(), Player(), Player(), Player()]
-
-    enemys_order = {
-        0: [1, 2, 3],
-        1: [2, 3, 0],
-        2: [3, 0, 1],
-        3: [0, 1, 2]
-    }
-
-    rounds = 200
-    hist = []
-
-    first_winner_at = None
-    first_winner_was = None
-
-    pieces = [p.get_pieces() for p in players]
-    hist.append([pieces, -1, first_winner_was, -1, -1])
-
-    for round_i in tqdm(range(rounds)):
-        # logging.debug(f'Round number: {round_i}')
-        for i, p in enumerate(players):
-            # logging.debug(f"Player {i}")
-            dice = np.random.randint(1, 6 + 1)
-
-            pieces = [p.get_pieces() for p in players]
-            hist.append([pieces, dice, first_winner_was, i + 1, round_i])
-
-            mover_pieces = p.get_pieces_that_can_move(dice)
-            if len(mover_pieces):
-                piece_to_move = mover_pieces[np.random.randint(0, len(mover_pieces))]
-
-                enemys = [players[e].get_pieces() for e in enemys_order[i]]
-
-                enemys_new = p.move_piece(piece_to_move, dice, enemys)
-
-                for e_i, e in enumerate(enemys_order[i]):
-                    players[e].set_pieces(enemys_new[e_i])
-
-            if p.player_winner():
-                if first_winner_at is None:
-                    first_winner_at = round_i
-                    first_winner_was = i + 1
-
-            pieces = [p.get_pieces() for p in players]
-            hist.append([pieces, dice, first_winner_was, i + 1, round_i])
-
-        if all([p.player_winner() for p in players]):
-            print(f"All are done at: {round_i} and first winner was at: {first_winner_at}")
-            break
-
-        pieces = [p.get_pieces() for p in players]
-        print(f"Pieces at {round_i}:", pieces)
-
-    print(f"Pieces at end:", [p.get_pieces() for p in players])
-
-    np.save(f"../GameSaves/RandomMove/{str(uuid.uuid4())}.npy", hist)
-    print(hist[1])
-    print(hist[-1])

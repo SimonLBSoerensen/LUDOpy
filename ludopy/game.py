@@ -55,7 +55,8 @@ class Game:
             pieces = [p.get_pieces() for p in self.players]
             enemy_pieces = None
         else:
-            assert 0 <= seen_from <= 3, "The seen_from has to be between 0 and 3. Indicating the player the pieces are seen from and the nemys are seen from"
+            assert 0 <= seen_from <= 3, "The seen_from has to be between 0 and 3. Indicating the player the pieces " \
+                                        "are seen from and the nemys are seen from "
             # Get where the players piece are
             pieces = self.players[seen_from].get_pieces()
             # Get where the enemy's piece are
@@ -105,8 +106,6 @@ class Game:
         player_is_a_winner = player.player_winner()
         # Check if there is a winner
         there_is_a_winner = any([p.player_winner() for p in self.players])
-
-
 
         return dice, move_pieces, player_pieces, enemy_pieces, player_is_a_winner, there_is_a_winner
 
@@ -325,25 +324,3 @@ class Game:
         """
         save_hist_video(video_out, self.hist, fps=fps, frame_size=frame_size, fourcc=fourcc)
 
-
-if __name__ == "__main__":
-    import uuid
-
-    g = Game()
-
-    rounds = 400
-    for _ in tqdm(range(rounds)):
-        (dice, move_pieces, player_pieces, enemy_pieces, player_is_a_winner, there_is_a_winner), player_i = g.get_observation()
-
-        if len(move_pieces):
-            piece_to_move = move_pieces[np.random.randint(0, len(move_pieces))]
-        else:
-            piece_to_move = -1
-        g.answer_observation(piece_to_move)
-
-    run_uuid = str(uuid.uuid4())
-
-    print("Saving hist to numpy file")
-    g.save_hist(f"{run_uuid}.npy")
-    print("Saving hist as video")
-    g.save_hist_video(f"{run_uuid}.mp4")
