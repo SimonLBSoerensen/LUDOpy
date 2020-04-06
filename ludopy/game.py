@@ -208,15 +208,16 @@ class Game:
         # If it is not in the first round a dice on 6 will give a extra move
         if self.round != 1 and self.current_dice == 6:
             next_player = False
-        # If it is the next players turn then change current_player
-        if next_player:
-            self.__count_player()
 
         # Set the observation pending to false as the last given observation was handled
         self.observation_pending = False
 
         # Get the environment after the move
         after_obs = self.__gen_observation(self.current_player, roll_dice=False)
+
+        # If it is the next players turn then change current_player
+        if next_player:
+            self.__count_player()
 
         return after_obs
 

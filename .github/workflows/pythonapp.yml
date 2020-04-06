@@ -39,4 +39,4 @@ jobs:
     - name: Test with pytest
       run: |
         pip install pytest
-        pytest test/randomwalk_pypi.py
+        pytest test/randomwalk.py
