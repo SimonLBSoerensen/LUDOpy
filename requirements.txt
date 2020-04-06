@@ -1,3 +1,2 @@
 numpy
 opencv-python>=3.1
-tqdm

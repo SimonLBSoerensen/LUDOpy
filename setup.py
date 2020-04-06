@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="ludopy",
-    version="1.1.10",
+    version="1.2.0",
     author="Simon L. B. Sørensen",
     author_email="simonlyckbjaert@hotmail.com",
     description="LUDO python",
@@ -21,7 +21,7 @@ setuptools.setup(
     keywords="LUDO, game",
     python_requires='>=3.6',
     license='MIT',
-    install_requires=["numpy", "opencv-python>=3.1", "tqdm"],
+    install_requires=["numpy", "opencv-python>=3.1"],
     include_package_data=True,
 )
 

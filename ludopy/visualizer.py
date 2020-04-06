@@ -1,6 +1,5 @@
 import cv2
 import numpy as np
-from tqdm import tqdm
 from collections import defaultdict
 import os
 
@@ -371,15 +370,7 @@ def draw_moment(board, moment):
     draw_move_count(board, round_i)
 
 
-def save_hist_video(filename, hist, fps=8, frame_size=None, fourcc=None):
-    board = draw_basic_board()
-
-    if frame_size is None:
-        save_frame_size = board.shape[:2]
-        save_frame_size = (save_frame_size[1], save_frame_size[0])
-    else:
-        save_frame_size = frame_size
-
+def save_video(filename, ar, fps=8, frame_size=None, fourcc=None, cvt_color_flag=cv2.COLOR_RGB2BGR):
     if fourcc is None:
         file_ext = os.path.split(filename)[-1].split(os.path.extsep)[-1]
         if file_ext == "mp4":
@@ -390,20 +381,40 @@ def save_hist_video(filename, hist, fps=8, frame_size=None, fourcc=None):
             raise RuntimeError("The video format is not supported. Use a other or add it to the code")
     else:
         encoder = cv2.VideoWriter_fourcc(*fourcc)
+
+    if frame_size is None:
+        save_frame_size = ar[0].shape[:2]
+        save_frame_size = (save_frame_size[1], save_frame_size[0])
+    else:
+        save_frame_size = frame_size
+
     video_out = cv2.VideoWriter(filename, encoder, fps, save_frame_size)
 
-    for i, moment in tqdm(enumerate(hist), total=len(hist)):
+    for frame in ar:
+        if frame_size is not None:
+            frame = cv2.resize(frame, save_frame_size)
+
+        if cvt_color_flag is not None:
+            frame = cv2.cvtColor(frame, cvt_color_flag)
+
+        video_out.write(frame)
+
+    video_out.release()
+
+
+def save_hist_video(filename, hist, fps=8, frame_size=None, fourcc=None):
+    board = draw_basic_board()
+
+    boards = []
+
+    for i, moment in enumerate(hist):
         board_take = board.copy()
 
         draw_moment(board_take, moment)
 
-        if frame_size is not None:
-            board_take = cv2.resize(board_take, save_frame_size)
+        boards.append(board_take)
 
-        board_take = cv2.cvtColor(board_take, cv2.COLOR_RGB2BGR)
-        video_out.write(board_take)
-
-    video_out.release()
+    save_video(filename, boards, fps=fps, frame_size=frame_size, fourcc=fourcc)
 
 
 def put_image_at_taile(board, image, n, m, mask=None):

@@ -1,10 +1,8 @@
 import unittest
 
-
 def randwalk():
     import ludopy
     import numpy as np
-    from tqdm import tqdm
 
     g = ludopy.Game()
     there_is_a_winner = False
@@ -19,6 +17,12 @@ def randwalk():
             piece_to_move = -1
 
         _, _, _, _, _, there_is_a_winner = g.answer_observation(piece_to_move)
+
+    print("Saving history to numpy file")
+    g.save_hist(f"game_history.npy")
+    print("Saving game video")
+    g.save_hist_video(f"game_video.mp4")
+
     return True
 
 
