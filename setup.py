@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="ludopy",
-    version="1.2.3",
+    version="1.2.4",
     author="Simon L. B. Sørensen",
     author_email="simonlyckbjaert@hotmail.com",
     description="LUDO python",

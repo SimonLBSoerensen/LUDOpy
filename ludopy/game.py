@@ -96,11 +96,11 @@ class Game:
         player = self.players[player_idx]
         # Get the pieces there can be moved with the current dice
         move_pieces = player.get_pieces_that_can_move(dice)
-        self.current_move_pieces = move_pieces
+        self.current_move_pieces = np.copy(move_pieces)
 
         # Get where the players piece are and the enemy's piece are
         player_pieces, enemy_pieces = self.get_pieces(player_idx)
-        self.current_enemys = enemy_pieces
+        self.current_enemys = np.copy(enemy_pieces)
         # Check if the player is a winner
         player_is_a_winner = player.player_winner()
         # Check if there is a winner
