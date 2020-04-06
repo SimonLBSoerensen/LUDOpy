@@ -203,6 +203,7 @@ class Player:
         :rtype enemys: list with 4 lists each with 4 int's
 
         """
+        enemys_new = enemys.copy()
         old_piece_pos = self.pieces[piece]
         new_piece_pos = old_piece_pos + dice
 
@@ -313,12 +314,12 @@ class Player:
                     # If there is only one enemy then move the enemy home.
                     if not do_not_check_rule_a and not PLAY_WITH_RULE_A or len(enemy_pieces_at_pos) == 1:
                         for enemy_piece in enemy_pieces_at_pos:
-                            enemys[enemy_at_pos][enemy_piece] = HOME_INDEX
+                            enemys_new[enemy_at_pos][enemy_piece] = HOME_INDEX
                     # If there is more than one then move own piece home
                     else:
                         self.pieces[piece] = HOME_INDEX
 
-        return enemys
+        return enemys_new
 
     def set_all_pieces_to_home(self):
         """

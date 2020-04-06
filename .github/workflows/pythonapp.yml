@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Sleep for 10 min (to wait for PyPI upload)
+    - name: Sleep for 5 min (to wait for PyPI upload)
       uses: jakejarvis/wait-action@master
       with:
         time: '5m'
