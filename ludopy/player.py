@@ -178,7 +178,7 @@ class Player:
 
         :param pieces: The pieces to set the players pieces to
         """
-        self.pieces = pieces.copy()
+        self.pieces = np.copy(pieces)
 
     def get_pieces(self):
         """
@@ -187,7 +187,7 @@ class Player:
         :return pieces: The players pieces
         :rtype pieces: list
         """
-        return self.pieces.copy()
+        return np.copy(self.pieces)
 
     def move_piece(self, piece, dice, enemys):
         """
