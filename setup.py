@@ -19,7 +19,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     keywords="LUDO, game",
-    python_requires='>=3.6',
+    python_requires='>=3.5',
     license='MIT',
     install_requires=["numpy", "opencv-python>=3.1"],
     include_package_data=True,

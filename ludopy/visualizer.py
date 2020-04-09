@@ -252,14 +252,14 @@ def draw_taile_indxs(board):
     for n in range(0, BOARD_TAILE_SIZE[0]):
         for m in range(0, BOARD_TAILE_SIZE[1]):
             top_left, bot_left, top_right, bot_right, center = get_taile_cord(n, m)
-            draw_text(board, f"{n},{m}", center, (0, 0, 0))
+            draw_text(board, "{},{}".format(n,m), center, (0, 0, 0))
 
 
 def draw_piece(board, n, m, amount, color, thickness=5, lineType=8, shift=0):
     top_left, bot_left, top_right, bot_right, center = get_taile_cord(n, m)
 
     cv2.circle(board, center, TAILE_PIECE_R, color, thickness=thickness, lineType=8, shift=0)
-    draw_text(board, f"{amount}", center, color, thickness=2, fontScale=1)
+    draw_text(board, "{}".format(amount), center, color, thickness=2, fontScale=1)
 
 
 def draw_basic_board(draw_taile_number=False):
@@ -337,24 +337,24 @@ def draw_dice_backgound(board):
     draw_multi_box(board, (3, 17), (4, 18), line_color=(0, 0, 0))
     draw_multi_box(board, (3, 17), (4, 18), fill_color=(255, 255, 255))
     _, _, _, bot_right, center = get_taile_cord(2, 17)
-    draw_text(board, f"Dice:", (bot_right[0], center[1]), (0, 0, 0), fontScale=1, thickness=2)
+    draw_text(board, "Dice:", (bot_right[0], center[1]), (0, 0, 0), fontScale=1, thickness=2)
 
 
 def draw_dice(board, dice, player):
     _, _, _, bot_right, _ = get_taile_cord(3, 17)
-    draw_text(board, f"{dice}", bot_right, PLAYER_COLORS[player], fontScale=3, thickness=3)
+    draw_text(board, "{}".format(dice), bot_right, PLAYER_COLORS[player], fontScale=3, thickness=3)
 
 
 def draw_move_count_backgound(board):
     draw_multi_box(board, (1, 17), (1, 18), line_color=(0, 0, 0))
     draw_multi_box(board, (1, 17), (1, 18), fill_color=(255, 255, 255))
     _, _, _, bot_right, center = get_taile_cord(0, 17)
-    draw_text(board, f"Round:", (bot_right[0], center[1]), (0, 0, 0), fontScale=1, thickness=2)
+    draw_text(board, "Round:", (bot_right[0], center[1]), (0, 0, 0), fontScale=1, thickness=2)
 
 
 def draw_move_count(board, count):
     _, _, _, bot_right, center = get_taile_cord(1, 17)
-    draw_text(board, f"{count}", (bot_right[0], center[1]), (0, 0, 0), fontScale=1, thickness=2)
+    draw_text(board, "{}".format(count), (bot_right[0], center[1]), (0, 0, 0), fontScale=1, thickness=2)
 
 
 def draw_moment(board, moment):
