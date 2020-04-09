@@ -226,7 +226,7 @@ class Game:
         Returns the winner of the game
 
         :return winner: If there has been a winner the winner is return if not -1 is returned
-        :rtype winner: bool
+        :rtype winner: int
         """
         return self.first_winner_was
 
