@@ -21,9 +21,9 @@ def randwalk():
         _, _, _, _, _, there_is_a_winner = g.answer_observation(piece_to_move)
 
     print("Saving history to numpy file")
-    g.save_hist(f"game_history.npy")
+    g.save_hist("game_history.npy")
     print("Saving game video")
-    g.save_hist_video(f"game_video.mp4")
+    g.save_hist_video("game_video.mp4")
 
     return True
 
