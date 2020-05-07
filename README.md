@@ -65,7 +65,7 @@ Extra throws are given when hitting six (no limit to how many times in a row).
 ### At the start
 Players take turns alternating with the dice.
 At the stroke of 6, you have the right to throw a piece out on the board.
-If all the pieces are in the starting field, you have three attempts to beat a 6.
+In the first round, you have three attempts to beat a 6.
 Players turn in turn in a clockwise direction (player 1 to 4).
 
 ### The course of the game
