@@ -8,7 +8,7 @@ For normal use of ludopy only ludopy.Game should be needed.
 
 # Documentation
 
-[![Documentation Status](https://readthedocs.org/projects/ludopy/badge/?version=latest)](https://ludopy.readthedocs.io/en/latest/?badge=latest)
+[//]: <> [![Documentation Status](https://readthedocs.org/projects/ludopy/badge/?version=latest)](https://ludopy.readthedocs.io/en/latest/?badge=latest)
 https://ludopy.readthedocs.io/en/latest/index.html
 
 # Installation
