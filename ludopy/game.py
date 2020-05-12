@@ -127,7 +127,7 @@ class Game:
         A given observation has to be answered before a new one can be given.
 
         :returns:
-        - obs: The observation taken of the state of the game seen from the player given in the return current_player (dice, move_pieces, player_pieces, enemy_pieces, player_is_a_winner, there_is_a_winner)
+        - obs: The observation taken of the state of the game seen from the player given in the return current_player (dice, move_pieces, player_pieces, enemy_pieces, player_is_a_winner, there_is_a_winner). enemy_pieces's index are seen from the specific enemy
         - current_player: Which players turn it is
         :rtype obs: (int, list with upto 4 int's, list with 4 int's, list of 4 lists with 4 int's, bool, bool)
         :rtype current_player: int
