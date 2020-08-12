@@ -8,9 +8,12 @@ class Game:
     The Game. This class is the only needed class for normal use
     """
 
-    def __init__(self):
+    def __init__(self, ghost_players=[]):
         """
         Maked a game with 4 players
+
+        :param ghost_players: Players there are not in the game
+        :type ghost_players: list of int
         """
         self.players = [Player(), Player(), Player(), Player()]
         self.hist = []
@@ -29,6 +32,7 @@ class Game:
             3: [0, 1, 2]
         }
         self.game_winners = []
+        self.ghost_players = ghost_players
 
     def __dice_generator(self):
         """
@@ -153,6 +157,11 @@ class Game:
         """
         # Count up the player
         self.current_player += 1
+
+        # Check is the self.current_player is a ghost player
+        if self.current_player in self.ghost_players:
+            self.current_player += 1
+
         # If the count is over 3 then reset to player 0 and count up the round
         if self.current_player > 3:
             self.current_player = 0
