@@ -8,7 +8,7 @@ class Game:
     The Game. This class is the only needed class for normal use
     """
 
-    def __init__(self, ghost_players=[]):
+    def __init__(self):
         """
         Maked a game with 4 players
 
@@ -48,7 +48,7 @@ class Game:
         :param seen_from: indicate which player the pieces and enemy pieces are seen from. If None then the pieces from all 4 player are given and no enemy pieces
         :type seen_from: int
         :returns:
-        - pieces: The pieces for alle the players (if seen_from = None) else the pieces for the player given in seen_from
+        - pieces: The pieces for all the players (if seen_from = None) else the pieces for the player given in seen_from
         - enemy_pieces: The pieces of the enemys if a player is given in seen_from
         :rtype pieces: list of 4 int's
         :rtype enemy_pieces: list with 4 lists each with 4 int's
@@ -59,8 +59,8 @@ class Game:
             enemy_pieces = None
         else:
             assert 0 <= seen_from <= 3, "The seen_from has to be between 0 and 3. Indicating the player the pieces " \
-                                        "are seen from and the nemys are seen from "
-            # Get where the players piece are
+                                        "are seen from and the enemies are seen from "
+            # Get where the player's pieces are
             pieces = self.players[seen_from].get_pieces()
             # Get where the enemy's piece are
             enemy_pieces = [self.players[e].get_pieces() for e in self.enemys_order[seen_from]]
@@ -98,11 +98,11 @@ class Game:
         dice = self.current_dice
 
         player = self.players[player_idx]
-        # Get the pieces there can be moved with the current dice
+        # Get the pieces that can be moved with the current dice
         move_pieces = player.get_pieces_that_can_move(dice)
         self.current_move_pieces = move_pieces
 
-        # Get where the players piece are and the enemy's piece are
+        # Get where the player's pieces are and the enemy's pieces are
         player_pieces, enemy_pieces = self.get_pieces(player_idx)
         self.current_enemys = enemy_pieces
         # Check if the player is a winner
@@ -121,7 +121,7 @@ class Game:
         :param enemy_pieces: The pieces to update
         :type enemy_pieces: list with 4 lists each with 4 int's
         """
-        # Go throng the enemy's and set the changes in there piece
+        # Go through the enemies and set the changes in their pieces
         for e_i, e in enumerate(self.enemys_order[player_idx]):
             self.players[e].set_pieces(enemy_pieces[e_i])
 
@@ -131,19 +131,19 @@ class Game:
         A given observation has to be answered before a new one can be given.
 
         :returns:
-        - obs: The observation taken of the state of the game seen from the player given in the return current_player (dice, move_pieces, player_pieces, enemy_pieces, player_is_a_winner, there_is_a_winner)
+        - obs: The observation taken of the state of the game seen from the player given in the return current_player (dice, move_pieces, player_pieces, enemy_pieces, player_is_a_winner, there_is_a_winner). enemy_pieces's index are seen from the specific enemy
         - current_player: Which players turn it is
         :rtype obs: (int, list with upto 4 int's, list with 4 int's, list of 4 lists with 4 int's, bool, bool)
         :rtype current_player: int
 
         """
-        # Check if there is a observation pending
+        # Check if there is an observation pending
         if self.observation_pending:
             raise RuntimeError("There is already a pending observation. "
                                "The pending observation has to be answered first")
         # Set pending observation to true
         self.observation_pending = True
-        # Get the current en environment
+        # Get the current environment
         obs = self.__gen_observation(self.current_player, roll_dice=True)
 
         # Add the bord and dice before the move to the history
@@ -169,14 +169,14 @@ class Game:
 
     def answer_observation(self, piece_to_move):
         """
-        Answers a observation. A observation has to be given before a answer can be given.
+        Answers an observation. An observation has to be given before an answer can be given.
 
-        :param piece_to_move: Which piece to move. If there was no pieces there cloud be moved the parameter is ignored
+        :param piece_to_move: Which piece to move. If there was no pieces that could be moved the parameter is ignored
         :type piece_to_move: int
         :return obs: Who the game was after the given move was done. obs is: (dice, move_pieces, player_pieces, enemy_pieces, player_is_a_winner, there_is_a_winner)
         :rtype obs: (int, list with upto 4 int's, list with 4 int's, list of 4 lists with 4 int's, bool, bool)
         """
-        # Check if there is a observation pending
+        # Check if there is an observation pending
         if not self.observation_pending:
             raise RuntimeError("There is no pending observation. "
                                "There has to be a pending observation has to be answered first")
@@ -188,7 +188,7 @@ class Game:
             new_enemys = self.players[self.current_player].move_piece(piece_to_move,
                                                                       self.current_dice, self.current_enemys)
             self.__set_enemy_pieces(self.current_player, new_enemys)
-        # If there was no pieces there could be moved then nothing can be done
+        # If there was no pieces that could be moved then nothing can be done
         else:
             pass # This line is present for readability
 
@@ -214,7 +214,7 @@ class Game:
             next_player = False
         else:
             self.current_start_attempts = 0
-        # If it is not in the first round a dice on 6 will give a extra move
+        # If it is not in the first round a dice on 6 will give an extra move
         if self.round != 1 and self.current_dice == 6:
             next_player = False
 
@@ -259,8 +259,8 @@ class Game:
 
     def get_hist(self):
         """
-        Returns the history there has been recorded during the game. This history can be used to make
-        a video of the game. The history will have been extended when a observation was given and when a
+        Returns the history that has been recorded during the game. This history can be used to make
+        a video of the game. The history will have been extended when a observation was given and when an
         answer to a observation was given.
 
         :return hist: list of [pieces, current_dice, first_winner_was, current_player, round]
@@ -270,9 +270,9 @@ class Game:
 
     def get_piece_hist(self, mode=0):
         """
-        Will return the how the pieces was recorded during the game.
+        Will return the how the pieces were recorded during the game.
 
-        :param mode: 0: All recorded pieces is returnt. 1: Only if a change is done there will be a new set of pieces. 2: Only unique set of pieces (order is preserved)
+        :param mode: 0: All recorded pieces are returned. 1: Only if a change is done there will be a new set of pieces. 2: Only unique set of pieces (order is preserved)
         :type mode: int
         :return piece_hist: List of sets of pieces [player 1, player 2, player 3, player 4]
         :rtype piece_hist: list of 4 lists with 4 int's
@@ -307,7 +307,7 @@ class Game:
 
     def save_hist(self, file_name):
         """
-        Saves the history of the game as a npy file
+        Saves the history of the game as an npy file
 
         :param file_name: The file name to save under. Has to have the .npy (numpy file) extension
         :type file_name: str
