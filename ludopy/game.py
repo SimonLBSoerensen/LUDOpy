@@ -8,7 +8,7 @@ class Game:
     The Game. This class is the only needed class for normal use
     """
 
-    def __init__(self):
+    def __init__(self, ghost_players=[]):
         """
         Maked a game with 4 players
 
@@ -159,7 +159,7 @@ class Game:
         self.current_player += 1
 
         # Check is the self.current_player is a ghost player
-        if self.current_player in self.ghost_players:
+        while self.current_player in self.ghost_players:
             self.current_player += 1
 
         # If the count is over 3 then reset to player 0 and count up the round
