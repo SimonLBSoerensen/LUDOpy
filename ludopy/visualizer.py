@@ -169,8 +169,8 @@ TRACK_PLAYER_1 = np.array(
     [[14, 7], [13, 7], [12, 7], [11, 7], [10, 7], [9, 6], [9, 5], [9, 4], [9, 3], [9, 2], [9, 1], [8, 1], [7, 1],
      [7, 2], [7, 3], [7, 4], [7, 5], [7, 6], [6, 7], [5, 7], [4, 7], [3, 7], [2, 7], [1, 7], [1, 8], [1, 9], [2, 9],
      [3, 9], [4, 9], [5, 9], [6, 9], [7, 10], [7, 11], [7, 12], [7, 13], [7, 14], [7, 15], [8, 15], [9, 15], [9, 14],
-     [9, 13], [9, 12], [9, 11], [9, 10], [10, 9], [11, 9], [12, 9], [13, 9], [14, 9], [15, 9], [15, 8], [15, 7],
-     [14, 7], [14, 8], [13, 8], [12, 8], [11, 8], [10, 8], [9, 8]])
+     [9, 13], [9, 12], [9, 11], [9, 10], [10, 9], [11, 9], [12, 9], [13, 9], [14, 9], [15, 9], [15, 8], [14, 8],
+     [13, 8], [12, 8], [11, 8], [10, 8], [9, 8]])
 DIFF_1 = TRACK_PLAYER_1 - TRACK_PLAYER_1[0]
 DIFF_2 = np.array([DIFF_1[:, 1], -DIFF_1[:, 0]]).T
 DIFF_3 = np.array([-DIFF_1[:, 0], -DIFF_1[:, 1]]).T
@@ -255,11 +255,11 @@ def draw_taile_indxs(board):
             draw_text(board, "{},{}".format(n,m), center, (0, 0, 0))
 
 
-def draw_piece(board, n, m, amount, color, thickness=5, lineType=8, shift=0):
+def draw_piece(board, n, m, amount, color, thickness=5, lineType=8, shift=0, text_thickness=2, fontScale=1):
     top_left, bot_left, top_right, bot_right, center = get_taile_cord(n, m)
 
-    cv2.circle(board, center, TAILE_PIECE_R, color, thickness=thickness, lineType=8, shift=0)
-    draw_text(board, "{}".format(amount), center, color, thickness=2, fontScale=1)
+    cv2.circle(board, center, TAILE_PIECE_R, color, thickness=thickness, lineType=lineType, shift=shift)
+    draw_text(board, "{}".format(amount), center, color, thickness=text_thickness, fontScale=fontScale)
 
 
 def draw_basic_board(draw_taile_number=False):

@@ -105,7 +105,7 @@ On the playing board there are several special areas and fields.
 
 - The starting area is where the four pieces start. To take a piece out of the starting area, you have to hit a six. If you have all your pieces in the starting area, you get up to three strokes with the dice before the tour is passed.
 - The target area is where the four pieces should end and can get to the goal. Each player has their own target area, and no other player is allowed to take their pieces in there. To reach the end of the target area (the goal), it must hit precisely - otherwise you have to move your piece in the opposite direction by the amount you have leftover.
-- Globus fields protect the pieces from being knocked home. If an opponent's piece lands on a protected piece, it is hit home. However, there is an exception to the colored globe fields. For example, only red chips can be protected in the red globe field, regardless of the number of chips in the field. If you have two pieces standing on the opponent's colored globe, they can both be knocked home.
+- Glob fields protect the pieces from being knocked home. If an opponent's piece lands on a protected piece, it is hit home. However, there is an exception to the colored globe fields. For example, only red chips can be protected in the red globe field, regardless of the number of chips in the field. If you have two pieces standing on the opponent's colored globe, they can both be knocked home.
 - Star fields act as shortcuts that can bring the pieces faster to the target area. If a piece lands on a star, it must be moved to the next star. If it is the star in front of the target area that lands on, the chip is moved directly to the goal.
 
 ### The winner
@@ -132,3 +132,10 @@ The number inside a piece indicate how many pieces that are at the same tail
 Here the number indicate which index the piece are at
 
 ![Example of the index method (shown for player 1)](https://github.com/SimonLBSoerensen/LUDOpy/blob/master/track.png?raw=true "Index method")
+
+
+Change log:
+- 1.4.1
+    - Change the path into the target area (now pieces goes directly from the last star into the target area while before they had to go to the start globe and then to the target area)
+    - Minor code changes 
+
