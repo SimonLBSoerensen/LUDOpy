@@ -34,7 +34,7 @@ class Game:
         self.game_winners = []
         self.ghost_players = ghost_players
 
-    def __dice_generator(self):
+    def _dice_generator(self):
         """
         Will update self.current_dice with a new random number on the dice
 
@@ -66,13 +66,18 @@ class Game:
             enemy_pieces = [self.players[e].get_pieces() for e in self.enemys_order[seen_from]]
         return pieces, enemy_pieces
 
-    def __add_to_hist(self):
+    def _make_moment(self):
+        pieces, _ = self.get_pieces()
+        moment = [pieces, self.current_dice, self.current_player, self.round]
+        return moment
+
+    def _add_to_hist(self):
         """
         Adds the state of the game to the history
 
         """
-        pieces, _ = self.get_pieces()
-        self.hist.append([pieces, self.current_dice, self.current_player, self.round])
+        moment = self._make_moment()
+        self.hist.append(moment)
 
     def reset(self):
         """
@@ -91,10 +96,10 @@ class Game:
         self.current_start_attempts = 0
         self.game_winners = []
 
-    def __gen_observation(self, player_idx, roll_dice = True):
+    def _gen_observation(self, player_idx, roll_dice = True):
         if roll_dice:
             # Roll the dice
-            self.__dice_generator()
+            self._dice_generator()
         dice = self.current_dice
 
         player = self.players[player_idx]
@@ -112,7 +117,7 @@ class Game:
 
         return dice, np.copy(move_pieces), np.copy(player_pieces), np.copy(enemy_pieces), player_is_a_winner, there_is_a_winner
 
-    def __set_enemy_pieces(self, player_idx, enemy_pieces):
+    def _set_enemy_pieces(self, player_idx, enemy_pieces):
         """
         Will set the enemy pieces to the pieces given in enemy_pieces
 
@@ -144,13 +149,13 @@ class Game:
         # Set pending observation to true
         self.observation_pending = True
         # Get the current environment
-        obs = self.__gen_observation(self.current_player, roll_dice=True)
+        obs = self._gen_observation(self.current_player, roll_dice=True)
 
         # Add the bord and dice before the move to the history
-        self.__add_to_hist()
+        self._add_to_hist()
         return obs, self.current_player
 
-    def __count_player(self):
+    def _count_player(self):
         """
         Updates the current player and the round if the current player was the last player
 
@@ -187,7 +192,7 @@ class Game:
         elif len(self.current_move_pieces):
             new_enemys = self.players[self.current_player].move_piece(piece_to_move,
                                                                       self.current_dice, self.current_enemys)
-            self.__set_enemy_pieces(self.current_player, new_enemys)
+            self._set_enemy_pieces(self.current_player, new_enemys)
         # If there was no pieces that could be moved then nothing can be done
         else:
             pass # This line is present for readability
@@ -203,7 +208,7 @@ class Game:
                 self.game_winners.append(self.current_player)
 
         # Add the bord after the move to the history
-        self.__add_to_hist()
+        self._add_to_hist()
 
         next_player = True
         # In the first round the players has 3 attempts to get a piece out of home
@@ -222,11 +227,11 @@ class Game:
         self.observation_pending = False
 
         # Get the environment after the move
-        after_obs = self.__gen_observation(self.current_player, roll_dice=False)
+        after_obs = self._gen_observation(self.current_player, roll_dice=False)
 
         # If it is the next players turn then change current_player
         if next_player:
-            self.__count_player()
+            self._count_player()
 
         return after_obs
 
@@ -302,7 +307,12 @@ class Game:
         :return board_img: A image of the board
         :rtype board_img: ndarray, RGB colorspace
         """
-        board_img = make_img_of_board(*self.hist[-1])
+        if len(self.hist):
+            moment = self.hist[-1]
+        else:
+            moment = self._make_moment()
+
+        board_img = make_img_of_board(*moment)
         return board_img
 
     def save_hist(self, file_name):

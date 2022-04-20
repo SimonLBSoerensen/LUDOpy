@@ -5,10 +5,10 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="ludopy",
-    version="1.3.1",
+    version="1.4.1",
     author="Simon L. B. Sørensen",
     author_email="simonlyckbjaert@hotmail.com",
-    description="LUDO python",
+    description="A implementation of the LUDO game in python for use in AI or whatever you want",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/SimonLBSoerensen/LUDOpy",
@@ -18,7 +18,7 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    keywords="LUDO, game",
+    keywords="LUDO, game, AI",
     python_requires='>=3.5',
     license='MIT',
     install_requires=["numpy", "opencv-python>=3.1"],
