@@ -325,7 +325,7 @@ class Game:
         """
         file_ext = file_name.split(".")[-1]
         assert file_ext == "npy", "The file extension has to be npy (numpy file)"
-        np.save(file_name, self.hist)
+        np.save(file_name, np.array(self.hist, dtype=object))
 
     def save_hist_video(self, video_out, fps=8, frame_size=None, fourcc=None):
         """
@@ -337,7 +337,7 @@ class Game:
         :type fps: float
         :param frame_size: The frame size to save in (width, height). If None is given the full board size is used
         :type frame_size: tuple
-        :param fourcc: FourCC code to be used. If None is given the FourCC code will be tried to create fro the file extension (works on .mp4 and .avi)
+        :param fourcc: FourCC code to be used. If None is given the FourCC code will be tried to create from the file extension (works on .mp4 and .avi)
         :type fourcc: str
 
         """

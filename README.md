@@ -4,7 +4,9 @@ This is a implementation of the LUDO game in python for use in AI or whatever yo
  
 For normal use of ludopy only ludopy.Game should be needed.
 
-[![PyPI version](https://badge.fury.io/py/ludopy.svg)](https://badge.fury.io/py/ludopy) ![Python application](https://github.com/SimonLBSoerensen/LUDOpy/workflows/Python%20application/badge.svg) [![GitHub license](https://img.shields.io/github/license/SimonLBSoerensen/LUDOpy.svg)](https://github.com/SimonLBSoerensen/LUDOpy/blob/master/LICENSE) 
+[![PyPI version](https://badge.fury.io/py/ludopy.svg)](https://badge.fury.io/py/ludopy) [![GitHub license](https://img.shields.io/github/license/SimonLBSoerensen/LUDOpy.svg)](https://github.com/SimonLBSoerensen/LUDOpy/blob/master/LICENSE) 
+
+
 
 # Documentation
 
@@ -54,7 +56,7 @@ g.save_hist(f"game_history.npy")
 print("Saving game video")
 g.save_hist_video(f"game_video.mp4")
 ```
-And if you only want to play with a certain amount of player:
+If you only want to play with a certain amount of player:
 [![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/SimonLBSoerensen/LUDOpy/blob/master/demo/random_walk_two_players.ipynb)
 ```python
 import ludopy
@@ -72,6 +74,37 @@ while not there_is_a_winner:
         piece_to_move = -1
 
     _, _, _, _, _, there_is_a_winner = g.answer_observation(piece_to_move)
+
+print("Saving history to numpy file")
+g.save_hist(f"game_history.npy")
+print("Saving game video")
+g.save_hist_video(f"game_video.mp4")
+```
+If you only want to render the environment:
+```python
+import ludopy
+import numpy as np
+import cv2
+
+g = ludopy.Game()
+there_is_a_winner = False
+
+while not there_is_a_winner:
+    (dice, move_pieces, player_pieces, enemy_pieces, player_is_a_winner, there_is_a_winner), player_i = g.get_observation()
+
+    enviroment_image_rgb = g.render_environment() # RGB image of the enviroment
+    enviroment_image_bgr = cv2.cvtColor(enviroment_image_rgb, cv2.COLOR_RGB2BGR)
+    cv2.imshow("Enviroment", enviroment_image_bgr)
+    cv2.waitKey(1)
+
+    if len(move_pieces):
+        piece_to_move = move_pieces[np.random.randint(0, len(move_pieces))]
+    else:
+        piece_to_move = -1
+
+    _, _, _, _, _, there_is_a_winner = g.answer_observation(piece_to_move)
+
+cv2.destroyAllWindows()
 
 print("Saving history to numpy file")
 g.save_hist(f"game_history.npy")
@@ -135,7 +168,9 @@ Here the number indicate which index the piece are at
 
 
 Change log:
+- 1.4.2
+  -   Fix error with numpy when saving the game history (a better fix is needed)
 - 1.4.1
-    - Change the path into the target area (now pieces goes directly from the last star into the target area while before they had to go to the start globe and then to the target area)
-    - Minor code changes 
+  - Change the path into the target area (now pieces goes directly from the last star into the target area while before they had to go to the start globe and then to the target area)
+  - Minor code changes 
 
