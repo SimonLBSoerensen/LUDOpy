@@ -80,7 +80,7 @@ g.save_hist(f"game_history.npy")
 print("Saving game video")
 g.save_hist_video(f"game_video.mp4")
 ```
-If you only want to render the environment:
+If you want to render the environment:
 ```python
 import ludopy
 import numpy as np
