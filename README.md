@@ -169,6 +169,21 @@ Here the number indicate which index the piece are at
 
 
 Change log:
+- 1.5.0
+  - Better fix for game history
+```python 
+# Convert from new history to old history
+old_hist = [[new_hist["pieces"][i], new_hist["current_dice"][i],
+             new_hist["current_player"][i], new_hist["round"][i]] for i in range(len(new_hist[list(new_hist.keys())[0]]))]
+
+# Convert from old history to new history
+new_hist = {"pieces": [], "current_dice": [], "current_player": [], "round": []}
+for pieces, current_dice, current_player, round in old_hist:
+    new_hist["pieces"].append(pieces)
+    new_hist["current_dice"].append(current_dice)
+    new_hist["current_player"].append(current_player)
+    new_hist["round"].append(round)
+```
 - 1.4.2
   -   Fix error with numpy when saving the game history (a better fix is needed)
 - 1.4.1

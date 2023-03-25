@@ -31,10 +31,21 @@ def randwalk():
     print("Moves per sec:", moves_per_sec)
 
     print("Saving history to numpy file")
-    g.save_hist("game_history.npy")
+    g.save_hist("game_history.npz")
     print("Saving game video")
     g.save_hist_video("game_video.mp4")
 
+    new_hist = g.get_hist()
+    old_hist = [[new_hist["pieces"][i], new_hist["current_dice"][i],
+                 new_hist["current_player"][i], new_hist["round"][i]] for i in
+                range(len(new_hist[list(new_hist.keys())[0]]))]
+    new_hist_2 = {"pieces": [], "current_dice": [], "current_player": [], "round": []}
+    for pieces, current_dice, current_player, round in old_hist:
+        new_hist_2["pieces"].append(pieces)
+        new_hist_2["current_dice"].append(current_dice)
+        new_hist_2["current_player"].append(current_player)
+        new_hist_2["round"].append(round)
+    print(new_hist_2)
     return True
 
 
